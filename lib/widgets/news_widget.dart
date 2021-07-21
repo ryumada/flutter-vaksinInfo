@@ -87,7 +87,59 @@ class NewsWidget extends StatelessWidget {
               );
             },
           ),
-          SizedBox(height: 100),
+          SizedBox(height: 10),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(20.0),
+              child: Card(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Expanded(
+                      flex: 1,
+                      child: LayoutBuilder(
+                        builder:
+                            (BuildContext context, BoxConstraints constraints) {
+                          return Container(
+                            height: constraints.maxWidth,
+                            decoration: const BoxDecoration(
+                              image: DecorationImage(
+                                image: AssetImage(
+                                    'assets/images/judul_sample.jpg'),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                    Expanded(
+                      flex: 2,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              'Judul Berita',
+                              style: TextStyle(fontSize: 16),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                                'Cuplikan berita tentang vaksin covid-19 hari ini '),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
           Text('Baca Lebih...'),
           Text('Baca Lebih...'),
           Text('Baca Lebih...'),

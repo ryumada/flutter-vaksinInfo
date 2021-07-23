@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:vaksin_info/widgets/news_widget.dart';
-import 'package:vaksin_info/widgets/test_widget.dart';
+import 'package:vaksin_info/widgets/_mainAppView_widget.dart';
 
 class HomePage extends StatefulWidget {
+  final color = Colors.blue;
+
   const HomePage({Key? key}) : super(key: key);
 
   _HomePageState createState() => _HomePageState();
@@ -15,8 +17,8 @@ class _HomePageState extends State<HomePage> {
 
   final List<List> _childrenProperty = [
     [Colors.blue, NewsWidget()],
-    [Colors.red, Text('page2')],
-    [Colors.purple, Text('page3')],
+    [Colors.red, MainAppView('Vaksin Todo')],
+    [Colors.purple, MainAppView('About')],
   ];
 
   Widget _homepageWidget = NewsWidget();
@@ -35,20 +37,23 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: color,
+        selectedItemColor: Colors.white,
+        unselectedItemColor: Colors.grey[400],
         onTap: onTabTapped,
         currentIndex: _currentIndex,
         items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
+            icon: Icon(Icons.new_label_sharp),
+            label: 'News',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.mail),
-            label: 'Mail',
+            label: 'Todo',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
+            icon: Icon(Icons.accessible),
+            label: 'About',
           ),
         ],
       ),
@@ -60,7 +65,7 @@ class _HomePageState extends State<HomePage> {
   void onTabTapped(int index) {
     setState(() {
       _currentIndex = index;
-      // color = _childrenProperty[index][0];
+      color = _childrenProperty[index][0];
       _homepageWidget = _childrenProperty[index][1];
       myKey++;
     });

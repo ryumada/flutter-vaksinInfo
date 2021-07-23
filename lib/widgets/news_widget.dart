@@ -87,90 +87,25 @@ class NewsWidget extends StatelessWidget {
               );
             },
           ),
+          /* -------------------------------- separator ------------------------------- */
           SizedBox(height: 10),
+          /* ------------------------------- list berita ------------------------------ */
+          NewsList(),
+          /* --------------------------------- footer --------------------------------- */
           Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(20.0),
-              child: Card(
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Expanded(
-                      flex: 1,
-                      child: LayoutBuilder(
-                        builder:
-                            (BuildContext context, BoxConstraints constraints) {
-                          return Container(
-                            height: constraints.maxWidth,
-                            decoration: const BoxDecoration(
-                              image: DecorationImage(
-                                image: AssetImage(
-                                    'assets/images/judul_sample.jpg'),
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                    Expanded(
-                      flex: 2,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text(
-                              'Judul Berita',
-                              style: TextStyle(fontSize: 16),
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Text(
-                                'Cuplikan berita tentang vaksin covid-19 hari ini '),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
+            padding: EdgeInsets.only(
+              top: 16.0,
+              bottom: 32.0,
+            ),
+            child: Center(
+              child: Text(
+                'That\'s all for now. 😉',
+                style: TextStyle(
+                  color: Colors.blueGrey[700],
                 ),
               ),
             ),
           ),
-          Text('Baca Lebih...'),
-          Text('Baca Lebih...'),
-          Text('Baca Lebih...'),
-          Text('Baca Lebih...'),
-          Text('Baca Lebih...'),
-          Text('Baca Lebih...'),
-          Text('Baca Lebih...'),
-          Text('Baca Lebih...'),
-          Text('Baca Lebih...'),
-          Text('Baca Lebih...'),
-          Text('Baca Lebih...'),
-          Text('Baca Lebih...'),
-          Text('Baca Lebih...'),
-          Text('Baca Lebih...'),
-          Text('Baca Lebih...'),
-          Text('Baca Lebih...'),
-          Text('Baca Lebih...'),
-          Text('Baca Lebih...'),
-          Text('Baca Lebih...'),
-          Text('Baca Lebih...'),
-          Text('Baca Lebih...'),
-          Text('Baca Lebih...'),
-          Text('Baca Lebih...'),
-          Text('Baca Lebih...'),
-          Text('Baca Lebih...'),
-          Text('Baca Lebih...'),
-          Text('Baca Lebih...'),
-          Text('Baca Lebih...'),
-          Text('Baca Lebih...'),
-          Text('Baca Lebih...'),
-          Text('Baca Lebih...'),
         ],
       ),
     );
@@ -180,6 +115,72 @@ class NewsWidget extends StatelessWidget {
     return TextStyle(
       fontSize: size,
       color: Colors.white,
+    );
+  }
+}
+
+class NewsList extends StatelessWidget {
+  final List<int> newsData = <int>[1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      mainAxisSize: MainAxisSize.max,
+      children: newsData.map((index) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(20.0),
+            child: Card(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Expanded(
+                    flex: 1,
+                    child: LayoutBuilder(
+                      builder:
+                          (BuildContext context, BoxConstraints constraints) {
+                        return Container(
+                          height: constraints.maxWidth,
+                          decoration: const BoxDecoration(
+                            image: DecorationImage(
+                              image:
+                                  AssetImage('assets/images/judul_sample.jpg'),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                  Expanded(
+                    flex: 2,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            'Judul Berita',
+                            style: TextStyle(fontSize: 16),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                              'Cuplikan berita tentang vaksin covid-19 hari ini '),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      }).toList(),
     );
   }
 }

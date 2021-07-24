@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:vaksin_info/widgets/about_widget.dart';
 import 'package:vaksin_info/widgets/news_widget.dart';
 import 'package:vaksin_info/widgets/_mainAppView_widget.dart';
+import 'package:vaksin_info/widgets/todo_widget.dart';
 
 class HomePage extends StatefulWidget {
   final color = Colors.blue;
@@ -17,8 +19,8 @@ class _HomePageState extends State<HomePage> {
 
   final List<List> _childrenProperty = [
     [Colors.blue, NewsWidget()],
-    [Colors.red, MainAppView('Vaksin Todo')],
-    [Colors.purple, MainAppView('About')],
+    [Colors.red, MainAppView('Vaksin Todo', TodoWidget())],
+    [Colors.purple, MainAppView('About', AboutWidget())],
   ];
 
   Widget _homepageWidget = NewsWidget();

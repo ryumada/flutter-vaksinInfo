@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 
 class MainAppView extends StatelessWidget {
   final String title;
-  const MainAppView(this.title, {Key? key}) : super(key: key);
+  final mainViewTab;
+  const MainAppView(this.title, this.mainViewTab, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -46,6 +47,7 @@ class MainAppView extends StatelessWidget {
                 ),
               ),
             ),
+            mainViewTab,
           ],
         ),
       ),

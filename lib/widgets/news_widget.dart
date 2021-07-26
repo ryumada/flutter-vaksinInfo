@@ -25,7 +25,7 @@ class NewsWidget extends StatelessWidget {
                 child: Stack(
                   children: <Widget>[
                     Container(
-                      height: constraints.maxWidth - 50,
+                      height: getBoxedSize(constraints),
                       decoration: BoxDecoration(
                         image: DecorationImage(
                           fit: BoxFit.cover,
@@ -35,7 +35,7 @@ class NewsWidget extends StatelessWidget {
                     ),
                     SafeArea(
                       child: Container(
-                        height: constraints.maxWidth - 50,
+                        height: getBoxedSize(constraints),
                         padding: const EdgeInsets.all(5.0),
                         alignment: Alignment.bottomCenter,
                         decoration: BoxDecoration(
@@ -124,6 +124,10 @@ class NewsWidget extends StatelessWidget {
       fontSize: size,
       color: Colors.white,
     );
+  }
+
+  double getBoxedSize(constraints) {
+    return (constraints.maxWidth - 50 < 300) ? constraints.maxWidth - 50 : 300;
   }
 }
 

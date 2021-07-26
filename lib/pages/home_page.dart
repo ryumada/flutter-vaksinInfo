@@ -19,8 +19,14 @@ class _HomePageState extends State<HomePage> {
 
   final List<List> _childrenProperty = [
     [Colors.blue, NewsWidget()],
-    [Colors.red, MainAppView('Vaksin Todo', TodoWidget())],
-    [Colors.purple, MainAppView('About', AboutWidget())],
+    [
+      Colors.red,
+      MainAppView('Vaksin Todo', Icons.checklist_rtl, Colors.red, TodoWidget())
+    ],
+    [
+      Colors.purple,
+      MainAppView('About', Icons.info, Colors.purple, AboutWidget())
+    ],
   ];
 
   Widget _homepageWidget = NewsWidget();
@@ -50,11 +56,11 @@ class _HomePageState extends State<HomePage> {
             label: 'News',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.mail),
+            icon: Icon(Icons.checklist_rtl),
             label: 'Todo',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.accessible),
+            icon: Icon(Icons.info),
             label: 'About',
           ),
         ],

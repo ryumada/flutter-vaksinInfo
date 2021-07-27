@@ -11,7 +11,8 @@
     For more details:
     * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
   -->
-  <base href="/">
+  <!-- BUG this line caused the app not showed on github pages -->
+  <!-- <base href="/"> --> 
 
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
@@ -31,7 +32,7 @@
        application. For more information, see:
        https://developers.google.com/web/fundamentals/primers/service-workers -->
   <script>
-    var serviceWorkerVersion = '2636704887';
+    var serviceWorkerVersion = '3270557657';
     var scriptLoaded = false;
     function loadMainDartJs() {
       if (scriptLoaded) {

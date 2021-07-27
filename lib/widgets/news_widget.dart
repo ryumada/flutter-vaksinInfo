@@ -1,9 +1,21 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:vaksin_info/data/news_data.dart';
 import 'package:vaksin_info/pages/newsReader_page.dart';
 
-class NewsWidget extends StatelessWidget {
-  const NewsWidget({Key? key}) : super(key: key);
+class NewsWidget extends StatefulWidget {
+  @override
+  _NewsWidgetState createState() => _NewsWidgetState();
+}
+
+class _NewsWidgetState extends State<NewsWidget> {
+  // late Future<NewsData> futureNewsData;
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   futureNewsData = fetchNewsData();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -97,8 +109,26 @@ class NewsWidget extends StatelessWidget {
           ),
           /* -------------------------------- separator ------------------------------- */
           SizedBox(height: 10),
-          /* ------------------------------- list berita ------------------------------ */
-          NewsList(),
+          LayoutBuilder(
+            builder: (BuildContext context, BoxConstraints constraints) {
+              return Text('${constraints.maxWidth}');
+            },
+          ),
+          LayoutBuilder(
+            builder: (BuildContext context, BoxConstraints constraints) {
+              if (constraints.maxWidth <= 550) {
+                /* ------------------------------- list berita ------------------------------ */
+                return NewsList();
+              } else if (constraints.maxWidth <= 600) {
+                return NewsGrid(gridCount: 2);
+              } else if (constraints.maxWidth <= 800) {
+                return NewsGrid(gridCount: 3);
+              } else {
+                return NewsGrid(gridCount: 4);
+              }
+            },
+          ),
+
           /* --------------------------------- footer --------------------------------- */
           Padding(
             padding: EdgeInsets.only(
@@ -127,7 +157,7 @@ class NewsWidget extends StatelessWidget {
   }
 
   double getBoxedSize(constraints) {
-    return (constraints.maxWidth - 50 < 300) ? constraints.maxWidth - 50 : 300;
+    return (constraints.maxWidth - 50 < 550) ? constraints.maxWidth - 50 : 550;
   }
 }
 
@@ -200,6 +230,83 @@ class NewsList extends StatelessWidget {
           ),
         );
       }).toList(),
+    );
+  }
+}
+
+class NewsGrid extends StatelessWidget {
+  final List<int> newsData = <int>[1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  final int gridCount;
+  NewsGrid({required this.gridCount});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 36.0,
+        vertical: 12.0,
+      ),
+      child: GridView.count(
+        shrinkWrap: true,
+        crossAxisCount: gridCount,
+        crossAxisSpacing: 12.0,
+        mainAxisSpacing: 12.0,
+        children: newsData.map((index) {
+          return InkWell(
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return NewsReaderPage();
+              }));
+            },
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20.0),
+                child: Card(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Expanded(
+                        flex: 1,
+                        child: Container(
+                          decoration: const BoxDecoration(
+                            image: DecorationImage(
+                              image:
+                                  AssetImage('assets/images/judul_sample.jpg'),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                'Judul Berita',
+                                style: TextStyle(fontSize: 16),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                  'Cuplikan berita tentang vaksin covid-19 hari ini '),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          );
+        }).toList(),
+      ),
     );
   }
 }

@@ -10,7 +10,8 @@ class AboutWidget extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.all(14.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Column(
               // crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -57,64 +58,81 @@ class AboutWidget extends StatelessWidget {
             SizedBox(
               height: 30,
             ),
-            Text(
-              'Dibuat Oleh',
-              style: titleFontStyle(),
-            ),
-            Text('ryumada'),
-            Divider(
-              height: 30.0,
-            ),
-            Text(
-              'Icon Resources:',
-              style: titleFontStyle(),
-            ),
-            Text('https://www.freepik.com/vectors/badge'),
-            Divider(
-              height: 30.0,
-            ),
-            Text(
-              'Data Resources:',
-              style: titleFontStyle(),
-            ),
-            Text('https://www.covid-19.go.id'),
-            Text('https://www.kemkes.go.id'),
-            SizedBox(
-              height: 1000,
-            ),
             LayoutBuilder(
               builder: (BuildContext context, BoxConstraints constraints) {
-                return Container(
-                  height: (constraints.maxWidth - 100 < 300)
-                      ? constraints.maxWidth - 100
-                      : 300,
-                  child: Image.asset('assets/images/getYourVaccine.png'),
+                return SizedBox(
+                  width:
+                      (constraints.maxWidth < 800) ? constraints.maxWidth : 800,
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Dibuat Oleh',
+                          style: titleFontStyle(),
+                        ),
+                        Text('ryumada'),
+                        SizedBox(
+                          height: 30.0,
+                        ),
+                        Text(
+                          'Icon Resources:',
+                          style: titleFontStyle(),
+                        ),
+                        Text('https://www.freepik.com/vectors/badge'),
+                        SizedBox(
+                          height: 30.0,
+                        ),
+                        Text(
+                          'Data Resources:',
+                          style: titleFontStyle(),
+                        ),
+                        Text('https://www.covid-19.go.id'),
+                        Text('https://www.kemkes.go.id'),
+                        SizedBox(
+                          height: 1000,
+                        ),
+                        LayoutBuilder(
+                          builder: (BuildContext context,
+                              BoxConstraints constraints) {
+                            return Container(
+                              height: (constraints.maxWidth - 150 < 300)
+                                  ? constraints.maxWidth - 150
+                                  : 300,
+                              child: Image.asset(
+                                  'assets/images/getYourVaccine.png'),
+                            );
+                          },
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                            top: 16.0,
+                            bottom: 32.0,
+                          ),
+                          child: Center(
+                            child: Text(
+                              'Congratulation?!, You\'ve reached the bottom of this view. Congrats 😁, just congrats 😜',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Colors.deepPurple[700],
+                              ),
+                            ),
+                          ),
+                        ),
+                        Center(
+                          child: Text(
+                            'copyright 2021\nryumada',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.deepPurple[700],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 );
               },
-            ),
-            Padding(
-              padding: EdgeInsets.only(
-                top: 16.0,
-                bottom: 32.0,
-              ),
-              child: Center(
-                child: Text(
-                  'Congratulation?!, You\'ve reached the bottom of this view. Congrats 😁, just congrats 😜',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.deepPurple[700],
-                  ),
-                ),
-              ),
-            ),
-            Center(
-              child: Text(
-                'copyright 2021\nryumada',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.deepPurple[700],
-                ),
-              ),
             ),
           ],
         ),

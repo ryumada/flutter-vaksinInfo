@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:vaksin_info/widgets/about_widget.dart';
 import 'package:vaksin_info/widgets/news_widget.dart';
 import 'package:vaksin_info/widgets/_mainAppView_widget.dart';
@@ -72,10 +73,12 @@ class _HomePageState extends State<HomePage> {
   /// This will trigger the build method to be run again with the state that we pass in to it.
   void onTabTapped(int index) {
     setState(() {
-      _currentIndex = index;
-      color = _childrenProperty[index][0];
-      _homepageWidget = _childrenProperty[index][1];
-      myKey++;
+      if (_currentIndex != index) {
+        _currentIndex = index;
+        color = _childrenProperty[index][0];
+        _homepageWidget = _childrenProperty[index][1];
+        myKey++;
+      }
     });
   }
 }

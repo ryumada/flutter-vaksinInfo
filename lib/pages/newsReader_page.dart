@@ -120,7 +120,9 @@ class NewsReaderPage extends StatelessWidget {
                         ),
                         // tag info berita
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
+                          mainAxisAlignment: (constraints.maxWidth - 25 < 600)
+                              ? MainAxisAlignment.start
+                              : MainAxisAlignment.center,
                           children: [
                             Text(
                               '22 Juni 2020',

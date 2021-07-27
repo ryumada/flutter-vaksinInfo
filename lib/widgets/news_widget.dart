@@ -23,7 +23,7 @@ class _NewsWidgetState extends State<NewsWidget> {
 
     return Container(
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           /* ----------------------------- headline berita ---------------------------- */
           LayoutBuilder(
@@ -31,17 +31,19 @@ class _NewsWidgetState extends State<NewsWidget> {
               return InkWell(
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return NewsReaderPage();
+                    final firstNewsData = newsDataList[0];
+                    return NewsReaderPage(firstNewsData);
                   }));
                 },
                 child: Stack(
                   children: <Widget>[
                     Container(
-                      height: getBoxedSize(constraints),
+                      height: getBoxedSize(constraints) +
+                          MediaQuery.of(context).padding.top,
                       decoration: BoxDecoration(
                         image: DecorationImage(
                           fit: BoxFit.cover,
-                          image: AssetImage('assets/images/judul_sample.jpg'),
+                          image: NetworkImage(newsDataList[0].urlToImage),
                         ),
                       ),
                     ),
@@ -76,7 +78,7 @@ class _NewsWidgetState extends State<NewsWidget> {
                                 flex: 1,
                               ),
                               Text(
-                                'Vaksin Sinovac apa Injeksi Covid-19?',
+                                newsDataList[0].title,
                                 style: getWhiteText(20.0),
                               ),
                               SizedBox(
@@ -111,20 +113,23 @@ class _NewsWidgetState extends State<NewsWidget> {
           SizedBox(height: 10),
           LayoutBuilder(
             builder: (BuildContext context, BoxConstraints constraints) {
-              return Text('${constraints.maxWidth}');
-            },
-          ),
-          LayoutBuilder(
-            builder: (BuildContext context, BoxConstraints constraints) {
               if (constraints.maxWidth <= 550) {
                 /* ------------------------------- list berita ------------------------------ */
                 return NewsList();
               } else if (constraints.maxWidth <= 600) {
-                return NewsGrid(gridCount: 2);
+                return NewsGrid(gridCount: 2, titleLength: 35, descLength: 60);
+              } else if (constraints.maxWidth <= 650) {
+                return NewsGrid(gridCount: 2, titleLength: 60, descLength: 60);
               } else if (constraints.maxWidth <= 800) {
-                return NewsGrid(gridCount: 3);
+                return NewsGrid(gridCount: 2, titleLength: 120, descLength: 90);
+              } else if (constraints.maxWidth <= 850) {
+                return NewsGrid(gridCount: 3, titleLength: 30, descLength: 60);
+              } else if (constraints.maxWidth <= 900) {
+                return NewsGrid(gridCount: 3, titleLength: 40, descLength: 60);
+              } else if (constraints.maxWidth <= 950) {
+                return NewsGrid(gridCount: 3, titleLength: 80, descLength: 60);
               } else {
-                return NewsGrid(gridCount: 4);
+                return NewsGrid(gridCount: 3, titleLength: 120, descLength: 60);
               }
             },
           ),
@@ -162,18 +167,18 @@ class _NewsWidgetState extends State<NewsWidget> {
 }
 
 class NewsList extends StatelessWidget {
-  final List<int> newsData = <int>[1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  // final List<int> newsData = <int>[1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisSize: MainAxisSize.max,
-      children: newsData.map((index) {
+      children: newsDataList.map((newsData) {
         return InkWell(
           onTap: () {
             Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return NewsReaderPage();
+              return NewsReaderPage(newsData);
             }));
           },
           child: Padding(
@@ -191,10 +196,9 @@ class NewsList extends StatelessWidget {
                             (BuildContext context, BoxConstraints constraints) {
                           return Container(
                             height: constraints.maxWidth,
-                            decoration: const BoxDecoration(
+                            decoration: BoxDecoration(
                               image: DecorationImage(
-                                image: AssetImage(
-                                    'assets/images/judul_sample.jpg'),
+                                image: NetworkImage(newsData.urlToImage),
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -211,14 +215,27 @@ class NewsList extends StatelessWidget {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Text(
-                              'Judul Berita',
-                              style: TextStyle(fontSize: 16),
+                              newsData.title,
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                             SizedBox(
                               height: 10,
                             ),
                             Text(
-                                'Cuplikan berita tentang vaksin covid-19 hari ini '),
+                              newsData.publishedAt.split('T')[0],
+                              style: TextStyle(
+                                color: Colors.grey,
+                              ),
+                            ),
+                            Text(
+                              newsData.author,
+                              style: TextStyle(
+                                color: Colors.grey,
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -235,77 +252,99 @@ class NewsList extends StatelessWidget {
 }
 
 class NewsGrid extends StatelessWidget {
-  final List<int> newsData = <int>[1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   final int gridCount;
-  NewsGrid({required this.gridCount});
+  final int descLength;
+  final int titleLength;
+  NewsGrid(
+      {required this.gridCount,
+      required this.descLength,
+      required this.titleLength});
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 36.0,
-        vertical: 12.0,
-      ),
-      child: GridView.count(
-        shrinkWrap: true,
-        crossAxisCount: gridCount,
-        crossAxisSpacing: 12.0,
-        mainAxisSpacing: 12.0,
-        children: newsData.map((index) {
-          return InkWell(
-            onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return NewsReaderPage();
-              }));
-            },
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(20.0),
-                child: Card(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Expanded(
-                        flex: 1,
-                        child: Container(
-                          decoration: const BoxDecoration(
-                            image: DecorationImage(
-                              image:
-                                  AssetImage('assets/images/judul_sample.jpg'),
-                              fit: BoxFit.cover,
+    return SizedBox(
+      width: 1000,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 36.0,
+          vertical: 12.0,
+        ),
+        child: GridView.count(
+          shrinkWrap: true,
+          crossAxisCount: gridCount,
+          crossAxisSpacing: 12.0,
+          mainAxisSpacing: 12.0,
+          children: newsDataList.map((newsData) {
+            return InkWell(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return NewsReaderPage(newsData);
+                }));
+              },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20.0),
+                  child: Card(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Expanded(
+                          flex: 1,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: NetworkImage(newsData.urlToImage),
+                                fit: BoxFit.cover,
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      Expanded(
-                        flex: 1,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text(
-                                'Judul Berita',
-                                style: TextStyle(fontSize: 16),
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Text(
-                                  'Cuplikan berita tentang vaksin covid-19 hari ini '),
-                            ],
+                        Expanded(
+                          flex: 1,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  (newsData.title.length < titleLength)
+                                      ? newsData.title
+                                      : newsData.title.replaceRange(titleLength,
+                                          newsData.title.length, '...'),
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
+                                  newsData.publishedAt.split('T')[0],
+                                  style: TextStyle(
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                                Text(
+                                  'By ${(newsData.author.length < 27) ? newsData.author : newsData.author.replaceRange(27, newsData.author.length, '...')}',
+                                  style: TextStyle(
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          );
-        }).toList(),
+            );
+          }).toList(),
+        ),
       ),
     );
   }

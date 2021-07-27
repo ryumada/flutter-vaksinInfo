@@ -89,6 +89,7 @@ class AboutWidget extends StatelessWidget {
                         ),
                         Text('https://www.covid-19.go.id'),
                         Text('https://www.kemkes.go.id'),
+                        Text('https://newsapi.org'),
                         SizedBox(
                           height: 1000,
                         ),

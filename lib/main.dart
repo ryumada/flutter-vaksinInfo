@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-// bisa import dengan 2 cara
-// import 'pages/home_page.dart'; // cara import lokal file
-import 'package:vaksin_info/pages/home_page.dart'; // dengan package
+/// bisa import dengan 2 cara
+/// import 'pages/home_page.dart'; /// cara import lokal file
+import 'package:vaksin_info/pages/home_page.dart'; /// dengan package
 
 void main() {
   runApp(MyApp());
